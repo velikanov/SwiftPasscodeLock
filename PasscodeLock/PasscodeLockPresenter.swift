@@ -87,28 +87,34 @@ public class PasscodeLockPresenter {
         mainWindow?.makeKeyAndVisible()
         
         if animated {
-            UIView.animateWithDuration(
-                0.5,
-                delay: 0,
-                usingSpringWithDamping: 1,
-                initialSpringVelocity: 0,
-                options: [.CurveEaseInOut],
-                animations: { [weak self] in
-                    
-                    self?.passcodeLockWindow.alpha = 0
-                },
-                completion: { [weak self] _ in
-                    
-                    self?.passcodeLockWindow.windowLevel = 0
-                    self?.passcodeLockWindow.rootViewController = nil
-                    self?.passcodeLockWindow.alpha = 1
-                    self?.toggleKeyboardVisibility(hide: false)
-                }
-            )
+        
+            animatePasscodeLockDismissal()
+            
         } else {
             passcodeLockWindow.windowLevel = 0
             passcodeLockWindow.rootViewController = nil
             toggleKeyboardVisibility(hide: false)
         }
+    }
+    
+    internal func animatePasscodeLockDismissal() {
+        UIView.animateWithDuration(
+            0.5,
+            delay: 0,
+            usingSpringWithDamping: 1,
+            initialSpringVelocity: 0,
+            options: [.CurveEaseInOut],
+            animations: { [weak self] in
+                
+                self?.passcodeLockWindow.alpha = 0
+            },
+            completion: { [weak self] _ in
+                
+                self?.passcodeLockWindow.windowLevel = 0
+                self?.passcodeLockWindow.rootViewController = nil
+                self?.passcodeLockWindow.alpha = 1
+                self?.toggleKeyboardVisibility(hide: false)
+            }
+        )
     }
 }
