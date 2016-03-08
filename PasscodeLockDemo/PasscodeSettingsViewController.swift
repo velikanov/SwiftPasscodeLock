@@ -64,7 +64,8 @@ class PasscodeSettingsViewController: UIViewController {
             passcodeVC = PasscodeLockViewController(state: .RemovePasscode, configuration: configuration)
             
             passcodeVC.successCallback = { lock in
-                
+                self.passcodeSwitch.on = !self.passcodeSwitch.on
+                self.changePasscodeButton.hidden = true
                 lock.repository.deletePasscode()
             }
         }
