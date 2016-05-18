@@ -82,6 +82,8 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
     public override func viewDidLoad() {
         super.viewDidLoad()
         
+        cancelButton?.setTitle(localizedStringFor("PasscodeLockCancelButtonTitle", comment: "Cancel Button Title"), forState: .Normal)
+        deleteSignButton?.setTitle(localizedStringFor("PasscodeLockDeleteButtonTitle", comment: "Delete Button Title"), forState: .Normal)
         deleteSignButton?.enabled = false
         
         setupEvents()
