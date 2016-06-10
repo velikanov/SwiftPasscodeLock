@@ -15,7 +15,7 @@ struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
     let passcodeLength = 4
     var isTouchIDAllowed = true
     let shouldRequestTouchIDImmediately = true
-    let maximumInccorectPasscodeAttempts = -1
+    let maximumInccorectPasscodeAttempts = 4 // use -1 to disable this feature
     
     init(repository: PasscodeRepositoryType) {
         

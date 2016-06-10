@@ -2,6 +2,10 @@
 //  CustomPasscodeLockPresenter.swift
 //  PasscodeLock
 //
+//  Adds:
+//  * Splash view
+//  * Handling of IncorrectPasscodeAttempts
+//
 //  Created by Chris Ziogas on 19/12/15.
 //  Copyright © 2015 Yanko Dimitrov. All rights reserved.
 //
@@ -9,13 +13,15 @@
 import Foundation
 import PasscodeLock
 
+// this constant is set here so as it can be used from CustomPasscodeLockViewController
+// it is not the best practice, but it set like this for demo purposes
+let UserDefaultsIncorrectPasscodeAttemptsReachedName = "passcode.incorrectPasscodeAttemptsReached"
+
 class CustomPasscodeLockPresenter: PasscodeLockPresenter {
     
     private let notificationCenter: NSNotificationCenter
     
     private let splashView: UIView
-    
-    var isFreshAppLaunch = true
     
     init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType) {
         
@@ -24,29 +30,36 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
         splashView = LockSplashView()
         
         // TIP: you can set your custom viewController that has added functionality in a custom .xib too
-        let passcodeLockVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
+        let passcodeLockVC = CustomPasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
         
         super.init(mainWindow: window, configuration: configuration, viewController: passcodeLockVC)
         
         // add notifications observers
         notificationCenter.addObserver(
             self,
-            selector: "applicationDidLaunched",
+            selector: #selector(self.applicationDidLaunched),
             name: UIApplicationDidFinishLaunchingNotification,
             object: nil
         )
         
         notificationCenter.addObserver(
             self,
-            selector: "applicationDidEnterBackground",
+            selector: #selector(self.applicationDidEnterBackground),
             name: UIApplicationDidEnterBackgroundNotification,
             object: nil
         )
         
         notificationCenter.addObserver(
             self,
-            selector: "applicationDidBecomeActive",
-            name: UIApplicationDidBecomeActiveNotification,
+            selector: #selector(self.applicationWillEnterForeground),
+            name: UIApplicationWillEnterForegroundNotification,
+            object: nil
+        )
+        
+        notificationCenter.addObserver(
+            self,
+            selector: #selector(self.incorrectPasscodeAttemptsReached),
+            name: PasscodeLockIncorrectPasscodeNotification,
             object: nil
         )
     }
@@ -58,13 +71,7 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
     
     dynamic func applicationDidLaunched() -> Void {
         
-        // start the Pin Lock presenter
-        passcodeLockVC.successCallback = { [weak self] _ in
-            
-            // we can set isFreshAppLaunch to false
-            self?.isFreshAppLaunch = false
-        }
-        
+        // show the Pin Lock presenter
         presentPasscodeLock()
     }
     
@@ -77,10 +84,28 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
         addSplashView()
     }
     
-    dynamic func applicationDidBecomeActive() -> Void {
+    dynamic func applicationWillEnterForeground() -> Void {
         
         // remove splashView for iOS app background swithcer
         removeSplashView()
+
+        // TODO: handle how user will continue
+        if NSUserDefaults.standardUserDefaults().boolForKey(UserDefaultsIncorrectPasscodeAttemptsReachedName),
+            let customPasscodeLockVC = passcodeLockVC as? CustomPasscodeLockViewController
+        {
+            customPasscodeLockVC.showLockedAlert()
+        }
+    }
+    
+    dynamic func incorrectPasscodeAttemptsReached() -> Void {
+        
+        // store that incorrect passcode attempts has reached
+        // so as app knows even if app is being force-quited
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: UserDefaultsIncorrectPasscodeAttemptsReachedName)
+        
+        if let customPasscodeLockVC = passcodeLockVC as? CustomPasscodeLockViewController {
+            customPasscodeLockVC.showLockedAlert()
+        }
     }
     
     private func addSplashView() {
