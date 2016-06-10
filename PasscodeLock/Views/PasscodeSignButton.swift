@@ -55,7 +55,7 @@ public class PasscodeSignButton: UIButton {
         return CGSizeMake(60, 60)
     }
     
-    private var defaultBackgroundColor = UIColor.clearColor()
+    public var defaultBackgroundColor = UIColor.clearColor()
     
     private func setupView() {
         
