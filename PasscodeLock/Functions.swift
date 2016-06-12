@@ -11,9 +11,9 @@ import Foundation
 func localizedStringFor(key: String, comment: String) -> String {
     
     let name = "PasscodeLock"
-    let bundle = bundleForResource(name, ofType: "strings")
+    let defaultString = NSLocalizedString(key, tableName: name, bundle: NSBundle(forClass: PasscodeLock.self), comment: comment)
     
-    return NSLocalizedString(key, tableName: name, bundle: bundle, comment: comment)
+    return NSLocalizedString(key, value: defaultString, tableName: name, bundle: NSBundle.mainBundle(), comment: comment)
 }
 
 func bundleForResource(name: String, ofType type: String) -> NSBundle {

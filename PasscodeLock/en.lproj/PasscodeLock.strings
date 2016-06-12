@@ -26,6 +26,12 @@
 "PasscodeLockMismatchTitle" = "Try again";
 "PasscodeLockMismatchDescription" = "Passcodes didn\'t match.";
 
+/* Cancel Button Title */
+"PasscodeLockCancelButtonTitle" = "Cancel";
+
+/* Delete Button Title */
+"PasscodeLockDeleteButtonTitle" = "Delete";
+
 /* Touch ID Reason */
 "PasscodeLockTouchIDReason" = "Authentication required to proceed";
 
