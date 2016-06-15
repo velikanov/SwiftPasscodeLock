@@ -15,5 +15,5 @@ public protocol PasscodeLockConfigurationType {
     var isTouchIDAllowed: Bool {get set}
     var shouldRequestTouchIDImmediately: Bool {get}
     var touchIdReason: String? {get set}
-    var maximumInccorectPasscodeAttempts: Int {get}
+    var maximumIncorrectPasscodeAttempts: Int {get}
 }
