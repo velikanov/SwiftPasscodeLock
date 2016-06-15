@@ -11,7 +11,7 @@ import UIKit
 public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegate {
     
     public enum LockState {
-        case EnterPasscode
+        case EnterPasscode(allowCancellation: Bool)
         case SetPasscode
         case ChangePasscode
         case RemovePasscode
@@ -19,7 +19,7 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
         func getState() -> PasscodeLockStateType {
             
             switch self {
-            case .EnterPasscode: return EnterPasscodeState()
+            case .EnterPasscode(let allowCancellation): return EnterPasscodeState(allowCancellation: allowCancellation)
             case .SetPasscode: return SetPasscodeState()
             case .ChangePasscode: return ChangePasscodeState()
             case .RemovePasscode: return EnterPasscodeState(allowCancellation: true)

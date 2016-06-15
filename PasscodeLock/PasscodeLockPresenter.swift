@@ -37,7 +37,7 @@ public class PasscodeLockPresenter {
     }
 
     public convenience init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType) {
-        let passcodeLockVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
+        let passcodeLockVC = PasscodeLockViewController(state: .EnterPasscode(allowCancellation: true), configuration: configuration)
         
         self.init(mainWindow: window, configuration: configuration, viewController: passcodeLockVC)
     }
