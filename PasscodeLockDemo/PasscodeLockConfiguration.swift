@@ -15,6 +15,7 @@ struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
     let passcodeLength = 4
     var isTouchIDAllowed = true
     let shouldRequestTouchIDImmediately = true
+    var touchIdReason: String? = "Demo reason"
     let maximumInccorectPasscodeAttempts = -1
     
     init(repository: PasscodeRepositoryType) {
