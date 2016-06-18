@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 public protocol PasscodeLockConfigurationType {
     
@@ -16,4 +17,22 @@ public protocol PasscodeLockConfigurationType {
     var shouldRequestTouchIDImmediately: Bool {get}
     var touchIdReason: String? {get set}
     var maximumInccorectPasscodeAttempts: Int {get}
+    var mainWindowLevel: CGFloat { get }
+    var passcodeBackWindowLevel: CGFloat { get }
+    var passcodeFrontWindowLevel: CGFloat { get }
+}
+
+public extension PasscodeLockConfigurationType {
+    
+    var mainWindowLevel: CGFloat {
+        return 1
+    }
+    
+    var passcodeBackWindowLevel: CGFloat {
+        return 0
+    }
+    
+    var passcodeFrontWindowLevel: CGFloat {
+        return 2
+    }
 }
