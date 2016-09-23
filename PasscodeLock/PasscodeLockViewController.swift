@@ -114,8 +114,8 @@ public class PasscodeLockViewController: UIViewController, PasscodeLockTypeDeleg
     
     private func setupEvents() {
         
-        notificationCenter?.addObserver(self, selector: "appWillEnterForegroundHandler:", name: UIApplicationWillEnterForegroundNotification, object: nil)
-        notificationCenter?.addObserver(self, selector: "appDidEnterBackgroundHandler:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        notificationCenter?.addObserver(self, selector: #selector(PasscodeLockViewController.appWillEnterForegroundHandler(_:)), name: UIApplicationWillEnterForegroundNotification, object: nil)
+        notificationCenter?.addObserver(self, selector: #selector(PasscodeLockViewController.appDidEnterBackgroundHandler(_:)), name: UIApplicationDidEnterBackgroundNotification, object: nil)
     }
     
     private func clearEvents() {
