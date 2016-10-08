@@ -11,6 +11,7 @@ import UIKit
 public class PasscodeLockPresenter {
     
     private var mainWindow: UIWindow?
+    private var passcodeWindowLevel: UIWindowLevel
     
     private lazy var passcodeLockWindow: UIWindow = {
         
@@ -27,19 +28,24 @@ public class PasscodeLockPresenter {
     
     public let passcodeLockVC: PasscodeLockViewController
     
-    public init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType, viewController: PasscodeLockViewController) {
-        
+    public init(mainWindow window: UIWindow?, passcodeWindowLevel: UIWindowLevel = 2,
+                           configuration: PasscodeLockConfigurationType, viewController: PasscodeLockViewController)
+    {
         mainWindow = window
         mainWindow?.windowLevel = 1
         passcodeConfiguration = configuration
+        self.passcodeWindowLevel = passcodeWindowLevel
         
         passcodeLockVC = viewController
     }
 
-    public convenience init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType) {
+    public convenience init(mainWindow window: UIWindow?, passcodeWindowLevel: UIWindowLevel = 2,
+                                       configuration: PasscodeLockConfigurationType)
+    {
         let passcodeLockVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
         
-        self.init(mainWindow: window, configuration: configuration, viewController: passcodeLockVC)
+        self.init(mainWindow: window, passcodeWindowLevel: passcodeWindowLevel,
+                  configuration: configuration, viewController: passcodeLockVC)
     }
     
     // HACK: below function that handles not presenting the keyboard in case Passcode is presented
@@ -64,7 +70,7 @@ public class PasscodeLockPresenter {
         guard !isPasscodePresented else { return }
         
         isPasscodePresented = true
-        passcodeLockWindow.windowLevel = 2
+        passcodeLockWindow.windowLevel = passcodeWindowLevel
         
         toggleKeyboardVisibility(hide: true)
         
