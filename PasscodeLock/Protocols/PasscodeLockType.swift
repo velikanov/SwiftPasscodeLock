@@ -16,17 +16,17 @@ public protocol PasscodeLockType {
     var state: PasscodeLockStateType {get}
     var isTouchIDAllowed: Bool {get}
     
-    func addSign(sign: String)
+    func addSign(_ sign: String)
     func removeSign()
-    func changeStateTo(state: PasscodeLockStateType)
+    func changeStateTo(_ state: PasscodeLockStateType)
     func authenticateWithBiometrics()
 }
 
 public protocol PasscodeLockTypeDelegate: class {
     
-    func passcodeLockDidSucceed(lock: PasscodeLockType)
-    func passcodeLockDidFail(lock: PasscodeLockType)
-    func passcodeLockDidChangeState(lock: PasscodeLockType)
-    func passcodeLock(lock: PasscodeLockType, addedSignAtIndex index: Int)
-    func passcodeLock(lock: PasscodeLockType, removedSignAtIndex index: Int)
+    func passcodeLockDidSucceed(_ lock: PasscodeLockType)
+    func passcodeLockDidFail(_ lock: PasscodeLockType)
+    func passcodeLockDidChangeState(_ lock: PasscodeLockType)
+    func passcodeLock(_ lock: PasscodeLockType, addedSignAtIndex index: Int)
+    func passcodeLock(_ lock: PasscodeLockType, removedSignAtIndex index: Int)
 }
