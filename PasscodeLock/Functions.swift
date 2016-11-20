@@ -8,7 +8,7 @@
 
 import Foundation
 
-func localizedStringFor(key: String, comment: String) -> String {
+func localizedStringFor(_ key: String, comment: String) -> String {
     
     let name = "PasscodeLock"
     let bundle = bundleForResource(name, ofType: "strings")
@@ -16,11 +16,11 @@ func localizedStringFor(key: String, comment: String) -> String {
     return NSLocalizedString(key, tableName: name, bundle: bundle, comment: comment)
 }
 
-func bundleForResource(name: String, ofType type: String) -> NSBundle {
+func bundleForResource(_ name: String, ofType type: String) -> Bundle {
     
-    if(NSBundle.mainBundle().pathForResource(name, ofType: type) != nil) {
-        return NSBundle.mainBundle()
+    if(Bundle.main.path(forResource: name, ofType: type) != nil) {
+        return Bundle.main
     }
     
-    return NSBundle(forClass: PasscodeLock.self)
+    return Bundle(for: PasscodeLock.self)
 }
