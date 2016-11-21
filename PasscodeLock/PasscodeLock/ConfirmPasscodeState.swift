@@ -15,7 +15,7 @@ struct ConfirmPasscodeState: PasscodeLockStateType {
     let isCancellableAction = true
     var isTouchIDAllowed = false
     
-    private var passcodeToConfirm: [String]
+    fileprivate var passcodeToConfirm: [String]
     
     init(passcode: [String]) {
         
@@ -24,7 +24,7 @@ struct ConfirmPasscodeState: PasscodeLockStateType {
         description = localizedStringFor("PasscodeLockConfirmDescription", comment: "Confirm passcode description")
     }
     
-    func acceptPasscode(passcode: [String], fromLock lock: PasscodeLockType) {
+    func acceptPasscode(_ passcode: [String], fromLock lock: PasscodeLockType) {
         
         if passcode == passcodeToConfirm {
             

@@ -8,13 +8,13 @@
 
 import UIKit
 
-public class PasscodeLockPresenter {
+open class PasscodeLockPresenter {
     
-    private var mainWindow: UIWindow?
+    fileprivate var mainWindow: UIWindow?
     
-    private lazy var passcodeLockWindow: UIWindow = {
+    fileprivate lazy var passcodeLockWindow: UIWindow = {
         
-        let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let window = UIWindow(frame: UIScreen.main.bounds)
         
         window.windowLevel = 0
         window.makeKeyAndVisible()
@@ -22,10 +22,10 @@ public class PasscodeLockPresenter {
         return window
     }()
     
-    private let passcodeConfiguration: PasscodeLockConfigurationType
-    public var isPasscodePresented = false
+    fileprivate let passcodeConfiguration: PasscodeLockConfigurationType
+    open var isPasscodePresented = false
     
-    public let passcodeLockVC: PasscodeLockViewController
+    open let passcodeLockVC: PasscodeLockViewController
     
     public init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType, viewController: PasscodeLockViewController) {
         
@@ -37,7 +37,7 @@ public class PasscodeLockPresenter {
     }
 
     public convenience init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType) {
-        let passcodeLockVC = PasscodeLockViewController(state: .EnterPasscode, configuration: configuration)
+        let passcodeLockVC = PasscodeLockViewController(state: .enterPasscode, configuration: configuration)
         
         self.init(mainWindow: window, configuration: configuration, viewController: passcodeLockVC)
     }
@@ -50,15 +50,14 @@ public class PasscodeLockPresenter {
     //       windowLevel has been tried without luck.
     //
     //       Revise in a later version and remove the hack if not needed
-    func toggleKeyboardVisibility(hide hide: Bool) {
-        if let keyboardWindow = UIApplication.sharedApplication().windows.last
-            where keyboardWindow.description.hasPrefix("<UIRemoteKeyboardWindow")
+    func toggleKeyboardVisibility(hide: Bool) {
+        if let keyboardWindow = UIApplication.shared.windows.last, keyboardWindow.description.hasPrefix("<UIRemoteKeyboardWindow")
         {
             keyboardWindow.alpha = hide ? 0.0 : 1.0
         }
     }
     
-    public func presentPasscodeLock() {
+    open func presentPasscodeLock() {
         
         guard passcodeConfiguration.repository.hasPasscode else { return }
         guard !isPasscodePresented else { return }
@@ -80,19 +79,19 @@ public class PasscodeLockPresenter {
         passcodeLockWindow.rootViewController = passcodeLockVC
     }
     
-    public func dismissPasscodeLock(animated animated: Bool = true) {
+    open func dismissPasscodeLock(animated: Bool = true) {
         
         isPasscodePresented = false
         mainWindow?.windowLevel = 1
         mainWindow?.makeKeyAndVisible()
         
         if animated {
-            UIView.animateWithDuration(
-                0.5,
+            UIView.animate(
+                withDuration: 0.5,
                 delay: 0,
                 usingSpringWithDamping: 1,
                 initialSpringVelocity: 0,
-                options: [.CurveEaseInOut],
+                options: UIViewAnimationOptions(),
                 animations: { [weak self] in
                     
                     self?.passcodeLockWindow.alpha = 0

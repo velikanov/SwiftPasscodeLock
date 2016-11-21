@@ -13,14 +13,14 @@ class NotificaionObserver: NSObject {
     var called = false
     var callCounter = 0
     
-    func observe(notification: String) {
+    func observe(_ notification: String) {
         
-        let center = NSNotificationCenter.defaultCenter()
+        let center = NotificationCenter.default
         
-        center.addObserver(self, selector: "handle:", name: notification, object: nil)
+        center.addObserver(self, selector: #selector(NotificaionObserver.handle(_:)), name: NSNotification.Name(rawValue: notification), object: nil)
     }
     
-    func handle(notification: NSNotification) {
+    func handle(_ notification: Notification) {
         
         called = true
         callCounter += 1
@@ -50,7 +50,7 @@ class EnterPasscodeStateTests: XCTestCase {
             
             var called = false
             
-            override func passcodeLockDidSucceed(lock: PasscodeLockType) {
+            override func passcodeLockDidSucceed(_ lock: PasscodeLockType) {
                 
                 called = true
             }
@@ -70,7 +70,7 @@ class EnterPasscodeStateTests: XCTestCase {
             
             var called = false
             
-            override func passcodeLockDidFail(lock: PasscodeLockType) {
+            override func passcodeLockDidFail(_ lock: PasscodeLockType) {
                 
                 called = true
             }
