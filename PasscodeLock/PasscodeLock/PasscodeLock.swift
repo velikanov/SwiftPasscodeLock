@@ -9,25 +9,25 @@
 import Foundation
 import LocalAuthentication
 
-public class PasscodeLock: PasscodeLockType {
+open class PasscodeLock: PasscodeLockType {
     
-    public weak var delegate: PasscodeLockTypeDelegate?
-    public let configuration: PasscodeLockConfigurationType
+    open weak var delegate: PasscodeLockTypeDelegate?
+    open let configuration: PasscodeLockConfigurationType
     
-    public var repository: PasscodeRepositoryType {
+    open var repository: PasscodeRepositoryType {
         return configuration.repository
     }
     
-    public var state: PasscodeLockStateType {
+    open var state: PasscodeLockStateType {
         return lockState
     }
     
-    public var isTouchIDAllowed: Bool {
+    open var isTouchIDAllowed: Bool {
         return isTouchIDEnabled() && configuration.isTouchIDAllowed && lockState.isTouchIDAllowed
     }
     
-    private var lockState: PasscodeLockStateType
-    private lazy var passcode = [String]()
+    fileprivate var lockState: PasscodeLockStateType
+    fileprivate lazy var passcode = [String]()
     
     public init(state: PasscodeLockStateType, configuration: PasscodeLockConfigurationType) {
         
@@ -37,7 +37,7 @@ public class PasscodeLock: PasscodeLockType {
         self.configuration = configuration
     }
     
-    public func addSign(sign: String) {
+    open func addSign(_ sign: String) {
         
         passcode.append(sign)
         delegate?.passcodeLock(self, addedSignAtIndex: passcode.count - 1)
@@ -45,11 +45,11 @@ public class PasscodeLock: PasscodeLockType {
         if passcode.count >= configuration.passcodeLength {
             
             lockState.acceptPasscode(passcode, fromLock: self)
-            passcode.removeAll(keepCapacity: true)
+            passcode.removeAll(keepingCapacity: true)
         }
     }
     
-    public func removeSign() {
+    open func removeSign() {
         
         guard passcode.count > 0 else { return }
         
@@ -57,13 +57,13 @@ public class PasscodeLock: PasscodeLockType {
         delegate?.passcodeLock(self, removedSignAtIndex: passcode.count)
     }
     
-    public func changeStateTo(state: PasscodeLockStateType) {
+    open func changeStateTo(_ state: PasscodeLockStateType) {
         
         lockState = state
         delegate?.passcodeLockDidChangeState(self)
     }
     
-    public func authenticateWithBiometrics() {
+    open func authenticateWithBiometrics() {
         
         guard isTouchIDAllowed else { return }
         
@@ -77,16 +77,16 @@ public class PasscodeLock: PasscodeLockType {
 
         context.localizedFallbackTitle = localizedStringFor("PasscodeLockTouchIDButton", comment: "TouchID authentication fallback button")
         
-        context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
+        context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) {
             success, error in
             
             self.handleTouchIDResult(success)
         }
     }
     
-    private func handleTouchIDResult(success: Bool) {
+    fileprivate func handleTouchIDResult(_ success: Bool) {
         
-        dispatch_async(dispatch_get_main_queue()) {
+        DispatchQueue.main.async {
             
             if success {
                 EnterPasscodeState.incorrectPasscodeAttempts = 0
@@ -95,10 +95,10 @@ public class PasscodeLock: PasscodeLockType {
         }
     }
     
-    private func isTouchIDEnabled() -> Bool {
+    fileprivate func isTouchIDEnabled() -> Bool {
         
         let context = LAContext()
         
-        return context.canEvaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, error: nil)
+        return context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
     }
 }
