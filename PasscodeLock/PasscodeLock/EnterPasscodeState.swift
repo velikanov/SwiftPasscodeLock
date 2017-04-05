@@ -20,10 +20,10 @@ struct EnterPasscodeState: PasscodeLockStateType {
     static let incorrectPasscodeAttemptsKey = "incorrectPasscodeAttempts"
     static var incorrectPasscodeAttempts: Int {
         get {
-            return NSUserDefaults.standardUserDefaults().integerForKey(incorrectPasscodeAttemptsKey)
+            return UserDefaults.standard.integer(forKey: incorrectPasscodeAttemptsKey)
         }
         set {
-            NSUserDefaults.standardUserDefaults().setInteger(newValue, forKey: incorrectPasscodeAttemptsKey)
+            UserDefaults.standard.set(newValue, forKey: incorrectPasscodeAttemptsKey)
         }
     }
     
