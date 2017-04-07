@@ -16,7 +16,7 @@ open class PasscodeLockPresenter {
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         
-        window.windowLevel = 0
+        window.windowLevel = self.passcodeConfiguration.passcodeBackWindowLevel
         window.makeKeyAndVisible()
         
         return window
@@ -30,7 +30,7 @@ open class PasscodeLockPresenter {
     public init(mainWindow window: UIWindow?, configuration: PasscodeLockConfigurationType, viewController: PasscodeLockViewController) {
         
         mainWindow = window
-        mainWindow?.windowLevel = 1
+        mainWindow?.windowLevel = configuration.mainWindowLevel
         passcodeConfiguration = configuration
         
         passcodeLockVC = viewController
@@ -64,7 +64,7 @@ open class PasscodeLockPresenter {
         guard !isPasscodePresented else { return }
         
         isPasscodePresented = true
-        passcodeLockWindow.windowLevel = 2
+        passcodeLockWindow.windowLevel = passcodeConfiguration.passcodeFrontWindowLevel
         
         toggleKeyboardVisibility(hide: true)
         
@@ -83,8 +83,10 @@ open class PasscodeLockPresenter {
     open func dismissPasscodeLock(animated: Bool = true) {
         
         isPasscodePresented = false
-        mainWindow?.windowLevel = 1
+        mainWindow?.windowLevel = passcodeConfiguration.mainWindowLevel
         mainWindow?.makeKeyAndVisible()
+        
+        let passcodeBackWindowLevel = passcodeConfiguration.passcodeBackWindowLevel
         
         if animated {
             UIView.animate(
@@ -99,14 +101,14 @@ open class PasscodeLockPresenter {
                 },
                 completion: { [weak self] _ in
                     
-                    self?.passcodeLockWindow.windowLevel = 0
+                    self?.passcodeLockWindow.windowLevel = passcodeBackWindowLevel
                     self?.passcodeLockWindow.rootViewController = nil
                     self?.passcodeLockWindow.alpha = 1
                     self?.toggleKeyboardVisibility(hide: false)
                 }
             )
         } else {
-            passcodeLockWindow.windowLevel = 0
+            passcodeLockWindow.windowLevel = passcodeBackWindowLevel
             passcodeLockWindow.rootViewController = nil
             toggleKeyboardVisibility(hide: false)
         }
