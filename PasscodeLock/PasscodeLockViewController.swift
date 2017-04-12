@@ -110,6 +110,16 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed
     }
     
+    // MARK: - Orientations   
+    
+    open override var shouldAutorotate: Bool {
+        return self.passcodeConfiguration.shouldAutorotate
+    }
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return self.passcodeConfiguration.supportedInterfaceOrientations
+    }
+    
     // MARK: - Events
     
     fileprivate func setupEvents() {

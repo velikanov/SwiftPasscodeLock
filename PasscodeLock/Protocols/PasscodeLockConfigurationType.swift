@@ -16,4 +16,6 @@ public protocol PasscodeLockConfigurationType {
     var shouldRequestTouchIDImmediately: Bool {get}
     var touchIdReason: String? {get set}
     var maximumInccorectPasscodeAttempts: Int {get}
+    var supportedInterfaceOrientations: UIInterfaceOrientationMask {get}
+    var shouldAutorotate: Bool {get}
 }

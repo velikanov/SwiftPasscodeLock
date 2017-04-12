@@ -10,6 +10,10 @@ import Foundation
 import PasscodeLock
 
 struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
+    public var touchIdReason: String?
+
+    let shouldAutorotate = false
+    let supportedInterfaceOrientations = UIInterfaceOrientationMask.portrait
     
     let repository: PasscodeRepositoryType
     let passcodeLength = 4
