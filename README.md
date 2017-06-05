@@ -92,6 +92,15 @@ presentViewController(passcodeViewController, animated: true, completion: nil)
 
 You can present the `PasscodeLockViewController` in one of the four initial states using the `LockState` enumeration options: `.enterPasscode`, `.enterOptionalPasscode`, `.setPasscode`, `.changePasscode`, `.removePasscode`.
 
+Following callbacks are available:
+```swift
+    open var successCallback: ((_ lock: PasscodeLockType) -> Void)?
+    open var dismissCompletionCallback: (()->Void)?
+    open var cancelCompletionCallback: (()->Void)?
+    open var wrongPasswordCallback: ((_ attemptNo: Int) -> Void)?
+    open var tooManyAttemptsCallback: ((_ attemptNo: Int)->Void)?
+```
+
 Also you can set the initial passcode lock state to your own implementation of the `PasscodeLockStateType` protocol.
 
 ## Customization
