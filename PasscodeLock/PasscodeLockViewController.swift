@@ -12,6 +12,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     public enum LockState {
         case enterPasscode
+        case enterOptionalPasscode
         case setPasscode
         case changePasscode
         case removePasscode
@@ -20,6 +21,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             
             switch self {
             case .enterPasscode: return EnterPasscodeState()
+            case .enterOptionalPasscode: return EnterOptionalPasscodeState()
             case .setPasscode: return SetPasscodeState()
             case .changePasscode: return ChangePasscodeState()
             case .removePasscode: return EnterPasscodeState(allowCancellation: true)
@@ -37,12 +39,16 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     open var successCallback: ((_ lock: PasscodeLockType) -> Void)?
     open var dismissCompletionCallback: (()->Void)?
+    open var cancelCompletionCallback: (()->Void)?
+    open var wrongPasswordCallback: ((_ attemptNo: Int) -> Void)?
+    open var tooManyAttemptsCallback: ((_ attemptNo: Int)->Void)?
     open var animateOnDismiss: Bool
     open var notificationCenter: NotificationCenter?
     
     internal let passcodeConfiguration: PasscodeLockConfigurationType
     internal var passcodeLock: PasscodeLockType
     internal var isPlaceholdersAnimationCompleted = true
+    internal var extraCallbacks = false
     
     fileprivate var shouldTryToAuthenticateWithBiometrics = true
     
@@ -66,6 +72,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     public convenience init(state: LockState, configuration: PasscodeLockConfigurationType, animateOnDismiss: Bool = true) {
         
         self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss)
+        
+        self.extraCallbacks = ( state == .enterPasscode || state == .enterOptionalPasscode )
+        
     }
     
     public required init(coder aDecoder: NSCoder) {
@@ -107,7 +116,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         titleLabel?.text = passcodeLock.state.title
         descriptionLabel?.text = passcodeLock.state.description
         cancelButton?.isHidden = !passcodeLock.state.isCancellableAction
-        touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed
+        touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed || passcodeLock.configuration.shouldDisableTouchIDButton
     }
     
     // MARK: - Events
@@ -147,7 +156,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     @IBAction func cancelButtonTap(_ sender: UIButton) {
         
-        dismissPasscodeLock(passcodeLock)
+        dismissPasscodeLock(passcodeLock, completionHandler: { [weak self] _ in
+            self?.cancelCompletionCallback?()
+        })
     }
     
     @IBAction func deleteSignButtonTap(_ sender: UIButton) {
@@ -254,6 +265,24 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open func passcodeLockDidFail(_ lock: PasscodeLockType) {
         
         animateWrongPassword()
+        
+        if ( self.extraCallbacks ) {
+            let attemptNo = EnterPasscodeState.incorrectPasscodeAttempts + 1
+            let maxAttempts = lock.configuration.maximumInccorectPasscodeAttempts
+            let shouldDissmissOnTooManyAttempts = lock.configuration.shouldDismissOnTooManyAttempts && lock.state.isCancellableAction
+            
+            if (( maxAttempts >= 0) && ( attemptNo >= maxAttempts )) {
+                if ( shouldDissmissOnTooManyAttempts ) {
+                    dismissPasscodeLock(lock, completionHandler: { [weak self] _ in
+                        self?.tooManyAttemptsCallback?(attemptNo)
+                    })
+                } else {
+                    self.tooManyAttemptsCallback?(attemptNo)
+                }
+            } else {
+                self.wrongPasswordCallback?(attemptNo)
+            }
+        }
     }
     
     open func passcodeLockDidChangeState(_ lock: PasscodeLockType) {
