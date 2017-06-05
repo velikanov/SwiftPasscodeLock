@@ -1,12 +1,12 @@
 # PasscodeLock
 A Swift implementation of passcode lock for iOS with TouchID authentication.
 
-Originally created by [@yankodimitrov](https://github.com/yankodimitrov/SwiftPasscodeLock), hope you're doing well.
+Originally created by [@yankodimitrov](https://github.com/yankodimitrov/SwiftPasscodeLock), then forded by [@velikanov](https://github.com/velikanov/SwiftPasscodeLock) hope you're doing well.
 
 <img src="https://raw.githubusercontent.com/yankodimitrov/SwiftPasscodeLock/master/passcode-lock.gif" height="386">
 
 ## Installation
-PasscodeLock requires Swift 2.0 and Xcode 7
+PasscodeLock requires Swift 3.0 and Xcode 8
 
 ### [CocoaPods](http://cocoapods.org/)
 
@@ -18,7 +18,7 @@ To integrate PasscodeLock into your Xcode project using CocoaPods, specify it in
 source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '8.0'
 
-pod 'PasscodeLock', '~> 1.0.2'
+pod 'PasscodeLock', '~> 1.0.3’
 ```
 
 Then, run the following command:
@@ -31,7 +31,7 @@ $ pod install
 
 Add the following line to your [Cartfile](https://github.com/carthage/carthage)
 ```swift
-github "velikanov/SwiftPasscodeLock"
+github “oskarirauta/SwiftPasscodeLock"
 ```
 ## Usage
 
@@ -60,11 +60,14 @@ import UIKit
 import PasscodeLock
 
 class PasscodeLockConfiguration: PasscodeLockConfigurationType {
+    var touchIdReason: String?
     let repository: PasscodeRepositoryType
     var passcodeLength = 4 // Specify the required amount of passcode digits
     var isTouchIDAllowed = true // Enable Touch ID
     var shouldRequestTouchIDImmediately = true // Use Touch ID authentication immediately
+    var shouldDisableTouchIDButton = true // Hides manual touchID activation button from enter code view
     var maximumInccorectPasscodeAttempts = 3 // Maximum incorrect passcode attempts
+    var shouldDismissOnTooManyAttempts = true // When cancellation is available, dismiss code input view after too many wrong code attempts
     
     init(repository: PasscodeRepositoryType) {
         self.repository = repository
@@ -87,7 +90,7 @@ let passcodeViewController = PasscodeLockViewController(state: .SetPasscode, con
 presentViewController(passcodeViewController, animated: true, completion: nil)
 ```
 
-You can present the `PasscodeLockViewController` in one of the four initial states using the `LockState` enumeration options: `.EnterPasscode`, `.SetPasscode`, `.ChangePasscode`, `.RemovePasscode`.
+You can present the `PasscodeLockViewController` in one of the four initial states using the `LockState` enumeration options: `.enterPasscode`, `.enterOptionalPasscode`, `.setPasscode`, `.changePasscode`, `.removePasscode`.
 
 Also you can set the initial passcode lock state to your own implementation of the `PasscodeLockStateType` protocol.
 
