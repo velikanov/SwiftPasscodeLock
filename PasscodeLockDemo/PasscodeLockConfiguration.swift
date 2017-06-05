@@ -10,6 +10,7 @@ import Foundation
 import PasscodeLock
 
 struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
+
     var touchIdReason: String?
 
     
@@ -17,7 +18,10 @@ struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
     let passcodeLength = 4
     var isTouchIDAllowed = true
     let shouldRequestTouchIDImmediately = true
-    let maximumInccorectPasscodeAttempts = -1
+    let shouldDisableTouchIDButton = true
+    let maximumInccorectPasscodeAttempts = 3
+    // let maximumInccorectPasscodeAttempts = -1
+    let shouldDismissOnTooManyAttempts = true
     
     init(repository: PasscodeRepositoryType) {
         
