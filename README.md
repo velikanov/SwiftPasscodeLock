@@ -111,7 +111,7 @@ The PasscodeLock will look for `PasscodeLockView.xib` inside your app bundle and
 
 Keep in mind that when using custom classes that are defined in another module, you'll need to set the Module field to that module's name in the Identity Inspector:
 
-<img src="https://raw.githubusercontent.com/yankodimitrov/SwiftPasscodeLock/master/identity-inspector.png">
+<img src=“https://github.com/oskarirauta/SwiftPasscodeLock/raw/master/identity-inspector.png”>
 
 Then connect the `view` outlet to the view of your `xib` file and make sure to conenct the remaining `IBOutlet`s and `IBAction`s.
 
