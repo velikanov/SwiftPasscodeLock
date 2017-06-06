@@ -106,6 +106,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        EnterPasscodeState.incorrectPasscodeAttempts = 0
         updatePasscodeView()
     }
     
