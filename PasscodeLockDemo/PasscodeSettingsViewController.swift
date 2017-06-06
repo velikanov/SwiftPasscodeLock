@@ -71,7 +71,6 @@ class PasscodeSettingsViewController: UIViewController {
             }
         }
         
-        passcodeVC.modalPresentationStyle = .overCurrentContext
         present(passcodeVC, animated: true, completion: nil)
     }
     
@@ -82,7 +81,6 @@ class PasscodeSettingsViewController: UIViewController {
         
         let passcodeLock = PasscodeLockViewController(state: .changePasscode, configuration: config)
         
-        passcodeLock.modalPresentationStyle = .overCurrentContext
         present(passcodeLock, animated: true, completion: nil)
     }
     
@@ -109,7 +107,6 @@ class PasscodeSettingsViewController: UIViewController {
             NSLog("Maximum amount of %d attempts reached", attemptNo)
         }
         
-        passcodeLock.modalPresentationStyle = .overCurrentContext
         present(passcodeLock, animated: true, completion: nil)
         
     }
