@@ -68,10 +68,17 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         passcodeLock.delegate = self
         notificationCenter = NotificationCenter.default
     }
-    
-    public convenience init(state: LockState, configuration: PasscodeLockConfigurationType, animateOnDismiss: Bool = true) {
-        
-        self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss)
+
+    public convenience init(state: LockState, configuration: PasscodeLockConfigurationType, darkUI: Bool = false, animateOnDismiss: Bool = true) {
+
+        if ( darkUI ) {
+            
+            self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss, nibName: "DarkPasscodeLockView", bundle: nil)
+            
+        } else {
+            
+            self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss)
+        }
         
         self.extraCallbacks = ( state == .enterPasscode || state == .enterOptionalPasscode )
         

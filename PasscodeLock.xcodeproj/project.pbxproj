@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E2B4C0E1EE72C68005D20D0 /* DarkPasscodeLockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */; };
 		6E93C8EC1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E93C8EB1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift */; };
 		C99EAF431B90B05700D61E1B /* PasscodeLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C99EAF421B90B05700D61E1B /* PasscodeLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99EAF4A1B90B05800D61E1B /* PasscodeLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99EAF3F1B90B05700D61E1B /* PasscodeLock.framework */; };
@@ -107,6 +108,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DarkPasscodeLockView.xib; sourceTree = "<group>"; };
 		6E93C8EB1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterOptionalPasscodeState.swift; sourceTree = "<group>"; };
 		C99EAF3F1B90B05700D61E1B /* PasscodeLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PasscodeLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99EAF421B90B05700D61E1B /* PasscodeLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasscodeLock.h; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				C9DC08111B90DE1B007A4DD0 /* PasscodeSignPlaceholderView.swift */,
 				C9DC08131B90DE50007A4DD0 /* PasscodeSignButton.swift */,
 				C9D3DF0A1B919CE4008561EB /* PasscodeLockView.xib */,
+				6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 			files = (
 				C9DC07FC1B90D0A3007A4DD0 /* PasscodeLock.strings in Resources */,
 				C9D3DF0B1B919CE4008561EB /* PasscodeLockView.xib in Resources */,
+				6E2B4C0E1EE72C68005D20D0 /* DarkPasscodeLockView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
