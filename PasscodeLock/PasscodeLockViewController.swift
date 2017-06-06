@@ -281,9 +281,12 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             
             if (( maxAttempts >= 0) && ( attemptNo >= maxAttempts )) {
                 if ( shouldDissmissOnTooManyAttempts ) {
-                    dismissPasscodeLock(lock, completionHandler: { [weak self] _ in
-                        self?.tooManyAttemptsCallback?(attemptNo)
-                    })
+		    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+
+                        dismissPasscodeLock(lock, completionHandler: { [weak self] _ in
+                            self?.tooManyAttemptsCallback?(attemptNo)
+                        })
+                    })			
                 } else {
                     self.tooManyAttemptsCallback?(attemptNo)
                 }
