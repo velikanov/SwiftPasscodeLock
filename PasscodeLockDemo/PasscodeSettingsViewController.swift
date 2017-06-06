@@ -91,7 +91,7 @@ class PasscodeSettingsViewController: UIViewController {
         let repo = UserDefaultsPasscodeRepository()
         let config = PasscodeLockConfiguration(repository: repo)
         
-        let passcodeLock = PasscodeLockViewController(state: .enterOptionalPasscode, configuration: config)
+        let passcodeLock = PasscodeLockViewController(state: .enterOptionalPasscode, configuration: config, darkUI: sender.tag == 0 ? false : true)
         
         passcodeLock.successCallback = { lock in
             NSLog("Success")

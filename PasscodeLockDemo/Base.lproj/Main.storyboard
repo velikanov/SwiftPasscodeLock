@@ -70,6 +70,13 @@
                                     <action selector="authenticateNowButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4m7-2T-exv"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dqg-TH-zse">
+                                <rect key="frame" x="301" y="324" width="166" height="30"/>
+                                <state key="normal" title="Authenticate now (Dark)"/>
+                                <connections>
+                                    <action selector="authenticateNowButtonTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AIf-IA-fN4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -80,10 +87,12 @@
                             <constraint firstItem="0sQ-Ot-x0k" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Lnz-UM-hdk"/>
                             <constraint firstItem="rmd-tl-sFf" firstAttribute="top" secondItem="FWy-5L-Ls0" secondAttribute="bottom" constant="20" id="Q1Z-1n-y86"/>
                             <constraint firstItem="xNW-hY-03M" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="-30" id="S6v-lm-4Ph"/>
+                            <constraint firstItem="Dqg-TH-zse" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="V5M-cI-EOX"/>
                             <constraint firstItem="DDy-pO-1qt" firstAttribute="top" secondItem="hX3-sK-N1u" secondAttribute="bottom" constant="20" id="XGA-4K-WAh"/>
                             <constraint firstItem="DDy-pO-1qt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bD9-jI-LSu"/>
                             <constraint firstItem="rmd-tl-sFf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="d3e-lg-VyU"/>
                             <constraint firstItem="FWy-5L-Ls0" firstAttribute="top" secondItem="0sQ-Ot-x0k" secondAttribute="bottom" constant="10" id="dXe-7d-aSS"/>
+                            <constraint firstItem="Dqg-TH-zse" firstAttribute="top" secondItem="DDy-pO-1qt" secondAttribute="bottom" constant="20" id="dZZ-bK-pnz"/>
                             <constraint firstItem="hX3-sK-N1u" firstAttribute="top" secondItem="mm8-A7-rJo" secondAttribute="bottom" constant="20" id="gzu-mf-ese"/>
                             <constraint firstItem="0sQ-Ot-x0k" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" id="l3Q-sY-BMc"/>
                             <constraint firstItem="mm8-A7-rJo" firstAttribute="leading" secondItem="xNW-hY-03M" secondAttribute="trailing" constant="10" id="si3-7E-qvZ"/>
