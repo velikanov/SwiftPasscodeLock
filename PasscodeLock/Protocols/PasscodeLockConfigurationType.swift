@@ -19,3 +19,22 @@ public protocol PasscodeLockConfigurationType {
     var supportedInterfaceOrientations: UIInterfaceOrientationMask {get}
     var shouldAutorotate: Bool {get}
 }
+
+// set configuration optionals
+extension PasscodeLockConfigurationType {
+  var passcodeLength: Int {
+    return 4
+  }
+  
+  var maximumInccorectPasscodeAttempts: Int {
+    return -1
+  }
+  
+  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+    return .portrait
+  }
+  
+  var shouldAutorotate: Bool {
+    return false
+  }
+}
