@@ -45,6 +45,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open var animateOnDismiss: Bool
     open var notificationCenter: NotificationCenter?
     
+    open var overrideTitleText: String? = nil
+    open var overrideDescriptionText: String? = nil
+	
     internal let passcodeConfiguration: PasscodeLockConfigurationType
     internal var passcodeLock: PasscodeLockType
     internal var isPlaceholdersAnimationCompleted = true
@@ -118,11 +121,16 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             authenticateWithBiometrics()
         }
     }
+	
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updatePasscodeView()
+    }
     
     internal func updatePasscodeView() {
         
-        titleLabel?.text = passcodeLock.state.title
-        descriptionLabel?.text = passcodeLock.state.description
+        titleLabel?.text = ( overrideTitleText != nil ? overrideTitleText! : passcodeLock.state.title )
+        descriptionLabel?.text = ( overrideDescriptionText != nil ? overrideDescriptionText! : passcodeLock.state.description )
         cancelButton?.isHidden = !passcodeLock.state.isCancellableAction
         touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed || passcodeLock.configuration.shouldDisableTouchIDButton
     }
