@@ -19,7 +19,7 @@
 "PasscodeLockConfirmDescription" = "Enter the passcode again.";
 
 /* Change Passcode State */
-"PasscodeLockChangeTitle" = "Enter Old Passcode";
+"PasscodeLockChangeTitle" = "Change Passcode";
 "PasscodeLockChangeDescription" = "Enter your old passcode.";
 
 /* Passcode Mismatch State */
