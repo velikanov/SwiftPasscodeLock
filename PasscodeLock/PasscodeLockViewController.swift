@@ -151,6 +151,8 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     open func appWillEnterForegroundHandler(_ notification: Notification) {
         
+	shouldTryToAuthenticateWithBiometrics = true
+	    
         if passcodeConfiguration.shouldRequestTouchIDImmediately {
             authenticateWithBiometrics()
         }
