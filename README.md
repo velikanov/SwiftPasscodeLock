@@ -1,12 +1,12 @@
 # PasscodeLock
 A Swift implementation of passcode lock for iOS with TouchID authentication.
 
-Originally created by [@yankodimitrov](https://github.com/yankodimitrov/SwiftPasscodeLock), hope you're doing well.
+Originally created by [@yankodimitrov](https://github.com/yankodimitrov/SwiftPasscodeLock), then forded by [@velikanov](https://github.com/velikanov/SwiftPasscodeLock) hope you're doing well.
 
 <img src="https://raw.githubusercontent.com/yankodimitrov/SwiftPasscodeLock/master/passcode-lock.gif" height="386">
 
 ## Installation
-PasscodeLock requires Swift 2.0 and Xcode 7
+PasscodeLock requires Swift 3.0 and Xcode 8
 
 ### [CocoaPods](http://cocoapods.org/)
 
@@ -16,9 +16,12 @@ To integrate PasscodeLock into your Xcode project using CocoaPods, specify it in
 
 ```ruby
 source 'https://github.com/CocoaPods/Specs.git'
-platform :ios, '8.0'
+platform :ios, ‘8.0’
 
-pod 'PasscodeLock', '~> 1.0.2'
+use_frameworks!
+
+target 'your_target_name_here'
+pod 'PasscodeLock', :git => ‘https://github.com/oskarirauta/SwiftPasscodeLock.git'
 ```
 
 Then, run the following command:
@@ -31,7 +34,7 @@ $ pod install
 
 Add the following line to your [Cartfile](https://github.com/carthage/carthage)
 ```swift
-github "velikanov/SwiftPasscodeLock"
+github “oskarirauta/SwiftPasscodeLock"
 ```
 ## Usage
 
@@ -60,11 +63,14 @@ import UIKit
 import PasscodeLock
 
 class PasscodeLockConfiguration: PasscodeLockConfigurationType {
+    var touchIdReason: String?
     let repository: PasscodeRepositoryType
     var passcodeLength = 4 // Specify the required amount of passcode digits
     var isTouchIDAllowed = true // Enable Touch ID
     var shouldRequestTouchIDImmediately = true // Use Touch ID authentication immediately
+    var shouldDisableTouchIDButton = true // Hides manual touchID activation button from enter code view
     var maximumInccorectPasscodeAttempts = 3 // Maximum incorrect passcode attempts
+    var shouldDismissOnTooManyAttempts = true // When cancellation is available, dismiss code input view after too many wrong code attempts
     
     init(repository: PasscodeRepositoryType) {
         self.repository = repository
@@ -87,7 +93,16 @@ let passcodeViewController = PasscodeLockViewController(state: .SetPasscode, con
 presentViewController(passcodeViewController, animated: true, completion: nil)
 ```
 
-You can present the `PasscodeLockViewController` in one of the four initial states using the `LockState` enumeration options: `.EnterPasscode`, `.SetPasscode`, `.ChangePasscode`, `.RemovePasscode`.
+You can present the `PasscodeLockViewController` in one of the four initial states using the `LockState` enumeration options: `.enterPasscode`, `.enterOptionalPasscode`, `.setPasscode`, `.changePasscode`, `.removePasscode`.
+
+Following callbacks are available:
+```swift
+    open var successCallback: ((_ lock: PasscodeLockType) -> Void)?
+    open var dismissCompletionCallback: (()->Void)?
+    open var cancelCompletionCallback: (()->Void)?
+    open var wrongPasswordCallback: ((_ attemptNo: Int) -> Void)?
+    open var tooManyAttemptsCallback: ((_ attemptNo: Int)->Void)?
+```
 
 Also you can set the initial passcode lock state to your own implementation of the `PasscodeLockStateType` protocol.
 
@@ -99,13 +114,13 @@ The PasscodeLock will look for `PasscodeLockView.xib` inside your app bundle and
 
 Keep in mind that when using custom classes that are defined in another module, you'll need to set the Module field to that module's name in the Identity Inspector:
 
-<img src="https://raw.githubusercontent.com/yankodimitrov/SwiftPasscodeLock/master/identity-inspector.png">
+<img src="https://raw.githubusercontent.com/oskarirauta/SwiftPasscodeLock/master/identity-inspector.png" height=“99”>
 
 Then connect the `view` outlet to the view of your `xib` file and make sure to conenct the remaining `IBOutlet`s and `IBAction`s.
 
 PasscodeLock comes with two view components: `PasscodeSignPlaceholderView` and `PasscodeSignButton` that you can use to create your own custom designs. Both classes are `@IBDesignable` and `@IBInspectable`, so you can see their appearance and change their properties right inside the interface builder:
 
-<img src="https://raw.githubusercontent.com/yankodimitrov/SwiftPasscodeLock/master/passcode-view.png" height="270">
+<img src="https://raw.githubusercontent.com/oskarirauta/SwiftPasscodeLock/master/passcode-view.png" height="270">
 
 ### Localization
 

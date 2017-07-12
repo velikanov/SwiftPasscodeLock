@@ -15,6 +15,7 @@ class PasscodeSettingsViewController: UIViewController {
     @IBOutlet weak var changePasscodeButton: UIButton!
     @IBOutlet weak var testTextField: UITextField!
     @IBOutlet weak var testActivityButton: UIButton!
+    @IBOutlet weak var authenticateNowButton: UIButton!
     
     fileprivate let configuration: PasscodeLockConfigurationType
     
@@ -46,6 +47,7 @@ class PasscodeSettingsViewController: UIViewController {
         let hasPasscode = configuration.repository.hasPasscode
         
         changePasscodeButton.isHidden = !hasPasscode
+        authenticateNowButton.isHidden = !hasPasscode
         passcodeSwitch.isOn = hasPasscode
     }
     
@@ -80,6 +82,33 @@ class PasscodeSettingsViewController: UIViewController {
         let passcodeLock = PasscodeLockViewController(state: .changePasscode, configuration: config)
         
         present(passcodeLock, animated: true, completion: nil)
+    }
+    
+    @IBAction func authenticateNowButtonTap(_ sender: UIButton) {
+        
+        let repo = UserDefaultsPasscodeRepository()
+        let config = PasscodeLockConfiguration(repository: repo)
+        
+        let passcodeLock = PasscodeLockViewController(state: .enterOptionalPasscode, configuration: config, darkUI: sender.tag == 0 ? false : true)
+        
+        passcodeLock.successCallback = { lock in
+            NSLog("Success")
+        }
+
+        passcodeLock.cancelCompletionCallback = { _ in
+            NSLog("Cancelled")
+        }
+        
+        passcodeLock.wrongPasswordCallback = { attemptNo in
+            NSLog("Wrong password attempt no %d", attemptNo)
+        }
+        
+        passcodeLock.tooManyAttemptsCallback = { attemptNo in
+            NSLog("Maximum amount of %d attempts reached", attemptNo)
+        }
+        
+        present(passcodeLock, animated: true, completion: nil)
+        
     }
     
     @IBAction func testAlertButtonTap(_ sender: UIButton) {

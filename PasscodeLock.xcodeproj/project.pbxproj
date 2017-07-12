@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6E2B4C0E1EE72C68005D20D0 /* DarkPasscodeLockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */; };
+		6E93C8EC1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E93C8EB1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift */; };
 		C99EAF431B90B05700D61E1B /* PasscodeLock.h in Headers */ = {isa = PBXBuildFile; fileRef = C99EAF421B90B05700D61E1B /* PasscodeLock.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C99EAF4A1B90B05800D61E1B /* PasscodeLock.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C99EAF3F1B90B05700D61E1B /* PasscodeLock.framework */; };
 		C9D3DF0B1B919CE4008561EB /* PasscodeLockView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9D3DF0A1B919CE4008561EB /* PasscodeLockView.xib */; };
@@ -106,6 +108,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DarkPasscodeLockView.xib; sourceTree = "<group>"; };
+		6E93C8EB1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterOptionalPasscodeState.swift; sourceTree = "<group>"; };
 		C99EAF3F1B90B05700D61E1B /* PasscodeLock.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PasscodeLock.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C99EAF421B90B05700D61E1B /* PasscodeLock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PasscodeLock.h; sourceTree = "<group>"; };
 		C99EAF441B90B05700D61E1B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 			children = (
 				C9DC07E01B90BBFD007A4DD0 /* PasscodeLock.swift */,
 				C9DC07F11B90C9DE007A4DD0 /* EnterPasscodeState.swift */,
+				6E93C8EB1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift */,
 				C9DC07FE1B90D24A007A4DD0 /* SetPasscodeState.swift */,
 				C9DC08011B90D2BA007A4DD0 /* ConfirmPasscodeState.swift */,
 				C9DC08041B90D394007A4DD0 /* ChangePasscodeState.swift */,
@@ -312,6 +317,7 @@
 				C9DC08111B90DE1B007A4DD0 /* PasscodeSignPlaceholderView.swift */,
 				C9DC08131B90DE50007A4DD0 /* PasscodeSignButton.swift */,
 				C9D3DF0A1B919CE4008561EB /* PasscodeLockView.xib */,
+				6E2B4C0D1EE72C68005D20D0 /* DarkPasscodeLockView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -461,6 +467,7 @@
 					};
 					C99EAF481B90B05700D61E1B = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0830;
 					};
 					C9D3DF0F1B91AD11008561EB = {
 						CreatedOnToolsVersion = 7.0;
@@ -507,6 +514,7 @@
 			files = (
 				C9DC07FC1B90D0A3007A4DD0 /* PasscodeLock.strings in Resources */,
 				C9D3DF0B1B919CE4008561EB /* PasscodeLockView.xib in Resources */,
+				6E2B4C0E1EE72C68005D20D0 /* DarkPasscodeLockView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +564,7 @@
 				C9DC07F21B90C9DE007A4DD0 /* EnterPasscodeState.swift in Sources */,
 				C9DC08141B90DE50007A4DD0 /* PasscodeSignButton.swift in Sources */,
 				C9D3DF481B91F099008561EB /* PasscodeLockPresenter.swift in Sources */,
+				6E93C8EC1EE5FA5C00D4F2F3 /* EnterOptionalPasscodeState.swift in Sources */,
 				C9DC07D81B90B261007A4DD0 /* PasscodeLockStateType.swift in Sources */,
 				C9DC08161B90DF4E007A4DD0 /* PasscodeLockViewController.swift in Sources */,
 				C9DC07E11B90BBFD007A4DD0 /* PasscodeLock.swift in Sources */,
@@ -816,6 +825,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasscodeLockTests/PasscodeLockTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -828,6 +838,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yankodimitrov.PasscodeLockTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "PasscodeLockTests/PasscodeLockTests-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

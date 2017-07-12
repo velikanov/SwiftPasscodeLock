@@ -38,6 +38,13 @@ open class PasscodeSignPlaceholderView: UIView {
         }
     }
     
+    @IBInspectable
+    open var borderColor: UIColor = UIColor.gray {
+        didSet {
+            setupView()
+        }
+    }
+    
     public override init(frame: CGRect) {
         
         super.init(frame: frame)
@@ -59,15 +66,15 @@ open class PasscodeSignPlaceholderView: UIView {
         
         layer.cornerRadius = 8
         layer.borderWidth = 1
-        layer.borderColor = activeColor.cgColor
+        layer.borderColor = borderColor.cgColor
         backgroundColor = inactiveColor
     }
     
     fileprivate func colorsForState(_ state: State) -> (backgroundColor: UIColor, borderColor: UIColor) {
         
         switch state {
-        case .inactive: return (inactiveColor, activeColor)
-        case .active: return (activeColor, activeColor)
+        case .inactive: return (inactiveColor, borderColor)
+        case .active: return (activeColor, borderColor)
         case .error: return (errorColor, errorColor)
         }
     }

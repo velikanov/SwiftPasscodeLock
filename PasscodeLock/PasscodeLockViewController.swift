@@ -12,6 +12,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     public enum LockState {
         case enterPasscode
+        case enterOptionalPasscode
         case setPasscode
         case changePasscode
         case removePasscode
@@ -20,6 +21,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             
             switch self {
             case .enterPasscode: return EnterPasscodeState()
+            case .enterOptionalPasscode: return EnterOptionalPasscodeState()
             case .setPasscode: return SetPasscodeState()
             case .changePasscode: return ChangePasscodeState()
             case .removePasscode: return EnterPasscodeState(allowCancellation: true)
@@ -37,12 +39,19 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     open var successCallback: ((_ lock: PasscodeLockType) -> Void)?
     open var dismissCompletionCallback: (()->Void)?
+    open var cancelCompletionCallback: (()->Void)?
+    open var wrongPasswordCallback: ((_ attemptNo: Int) -> Void)?
+    open var tooManyAttemptsCallback: ((_ attemptNo: Int)->Void)?
     open var animateOnDismiss: Bool
     open var notificationCenter: NotificationCenter?
     
+    open var overrideTitleText: String? = nil
+    open var overrideDescriptionText: String? = nil
+	
     internal let passcodeConfiguration: PasscodeLockConfigurationType
     internal var passcodeLock: PasscodeLockType
     internal var isPlaceholdersAnimationCompleted = true
+    internal var extraCallbacks = false
     
     fileprivate var shouldTryToAuthenticateWithBiometrics = true
     
@@ -62,10 +71,20 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         passcodeLock.delegate = self
         notificationCenter = NotificationCenter.default
     }
-    
-    public convenience init(state: LockState, configuration: PasscodeLockConfigurationType, animateOnDismiss: Bool = true) {
+
+    public convenience init(state: LockState, configuration: PasscodeLockConfigurationType, darkUI: Bool = false, animateOnDismiss: Bool = true) {
+
+        if ( darkUI ) {
+            
+            self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss, nibName: "DarkPasscodeLockView", bundle: nil)
+            
+        } else {
+            
+            self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss)
+        }
         
-        self.init(state: state.getState(), configuration: configuration, animateOnDismiss: animateOnDismiss)
+        self.extraCallbacks = ( state == .enterPasscode || state == .enterOptionalPasscode )
+        
     }
     
     public required init(coder aDecoder: NSCoder) {
@@ -90,6 +109,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        EnterPasscodeState.incorrectPasscodeAttempts = 0
         updatePasscodeView()
     }
     
@@ -101,13 +121,18 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             authenticateWithBiometrics()
         }
     }
+	
+    open override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        updatePasscodeView()
+    }
     
     internal func updatePasscodeView() {
         
-        titleLabel?.text = passcodeLock.state.title
-        descriptionLabel?.text = passcodeLock.state.description
+        titleLabel?.text = ( overrideTitleText != nil ? overrideTitleText! : passcodeLock.state.title )
+        descriptionLabel?.text = ( overrideDescriptionText != nil ? overrideDescriptionText! : passcodeLock.state.description )
         cancelButton?.isHidden = !passcodeLock.state.isCancellableAction
-        touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed
+        touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed || passcodeLock.configuration.shouldDisableTouchIDButton
     }
     
     // MARK: - Events
@@ -126,6 +151,8 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     open func appWillEnterForegroundHandler(_ notification: Notification) {
         
+	shouldTryToAuthenticateWithBiometrics = true
+	    
         if passcodeConfiguration.shouldRequestTouchIDImmediately {
             authenticateWithBiometrics()
         }
@@ -147,7 +174,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     @IBAction func cancelButtonTap(_ sender: UIButton) {
         
-        dismissPasscodeLock(passcodeLock)
+        dismissPasscodeLock(passcodeLock, completionHandler: { [weak self] _ in
+            self?.cancelCompletionCallback?()
+        })
     }
     
     @IBAction func deleteSignButtonTap(_ sender: UIButton) {
@@ -176,10 +205,10 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         if presentingViewController?.presentedViewController == self {
             
             dismiss(animated: animateOnDismiss, completion: { [weak self] _ in
-                
-                self?.dismissCompletionCallback?()
-                
+                                
                 completionHandler?()
+							     
+                self?.dismissCompletionCallback?()
             })
             
             return
@@ -190,9 +219,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             navigationController?.popViewController(animated: animateOnDismiss)
         }
         
-        dismissCompletionCallback?()
-        
         completionHandler?()
+	    
+        dismissCompletionCallback?()        
     }
     
     // MARK: - Animations
@@ -254,6 +283,27 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open func passcodeLockDidFail(_ lock: PasscodeLockType) {
         
         animateWrongPassword()
+        
+        if ( self.extraCallbacks ) {
+            let attemptNo = EnterPasscodeState.incorrectPasscodeAttempts + 1
+            let maxAttempts = lock.configuration.maximumInccorectPasscodeAttempts
+            let shouldDissmissOnTooManyAttempts = lock.configuration.shouldDismissOnTooManyAttempts && lock.state.isCancellableAction
+            
+            if (( maxAttempts >= 0) && ( attemptNo >= maxAttempts )) {
+                if ( shouldDissmissOnTooManyAttempts ) {
+		    DispatchQueue.main.asyncAfter(deadline: .now() + 0.6, execute: {
+
+                        self.dismissPasscodeLock(lock, completionHandler: { [weak self] _ in
+                            self?.tooManyAttemptsCallback?(attemptNo)
+                        })
+                    })			
+                } else {
+                    self.tooManyAttemptsCallback?(attemptNo)
+                }
+            } else {
+                self.wrongPasswordCallback?(attemptNo)
+            }
+        }
     }
     
     open func passcodeLockDidChangeState(_ lock: PasscodeLockType) {
