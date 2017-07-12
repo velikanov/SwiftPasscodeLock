@@ -205,10 +205,10 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         if presentingViewController?.presentedViewController == self {
             
             dismiss(animated: animateOnDismiss, completion: { [weak self] _ in
-                
-                self?.dismissCompletionCallback?()
-                
+                                
                 completionHandler?()
+							     
+                self?.dismissCompletionCallback?()
             })
             
             return
@@ -219,9 +219,9 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
             navigationController?.popViewController(animated: animateOnDismiss)
         }
         
-        dismissCompletionCallback?()
-        
         completionHandler?()
+	    
+        dismissCompletionCallback?()        
     }
     
     // MARK: - Animations
