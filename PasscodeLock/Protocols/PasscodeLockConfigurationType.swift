@@ -17,3 +17,14 @@ public protocol PasscodeLockConfigurationType {
     var touchIdReason: String? {get set}
     var maximumInccorectPasscodeAttempts: Int {get}
 }
+
+// set configuration optionals
+public extension PasscodeLockConfigurationType {
+    var passcodeLength: Int {
+        return 4
+    }
+    
+    var maximumInccorectPasscodeAttempts: Int {
+        return -1
+    }
+}

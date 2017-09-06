@@ -10,9 +10,9 @@ import Foundation
 
 class FakePasscodeLockDelegate: PasscodeLockTypeDelegate {
     
-    func passcodeLockDidSucceed(lock: PasscodeLockType) {}
-    func passcodeLockDidFail(lock: PasscodeLockType) {}
-    func passcodeLockDidChangeState(lock: PasscodeLockType) {}
-    func passcodeLock(lock: PasscodeLockType, addedSignAtIndex index: Int) {}
-    func passcodeLock(lock: PasscodeLockType, removedSignAtIndex index: Int) {}
+    func passcodeLockDidSucceed(_ lock: PasscodeLockType) {}
+    func passcodeLockDidFail(_ lock: PasscodeLockType) {}
+    func passcodeLockDidChangeState(_ lock: PasscodeLockType) {}
+    func passcodeLock(_ lock: PasscodeLockType, addedSignAtIndex index: Int) {}
+    func passcodeLock(_ lock: PasscodeLockType, removedSignAtIndex index: Int) {}
 }
