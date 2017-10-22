@@ -44,7 +44,9 @@ open class PasscodeLock: PasscodeLockType {
         
         if passcode.count >= configuration.passcodeLength {
             
-            lockState.acceptPasscode(passcode, fromLock: self)
+            // handles "requires exclusive access" error at Swift 4
+            var lockStateCopy = lockState
+            lockStateCopy.acceptPasscode(passcode, fromLock: self)
             passcode.removeAll(keepingCapacity: true)
         }
     }

@@ -18,7 +18,7 @@ class FakePasscodeRepository: PasscodeRepositoryType {
     var savePasscodeCalled = false
     var savedPasscode = [String]()
     
-    func savePasscode(passcode: [String]) {
+    func savePasscode(_ passcode: [String]) {
         
         savePasscodeCalled = true
         savedPasscode = passcode

@@ -25,7 +25,7 @@ class FakePasscodeLock: PasscodeLockType {
         self.configuration = configuration
     }
     
-    func addSign(sign: String) {
+    func addSign(_ sign: String) {
         
     }
     
@@ -33,7 +33,7 @@ class FakePasscodeLock: PasscodeLockType {
         
     }
     
-    func changeStateTo(state: PasscodeLockStateType) {
+    func changeStateTo(_ state: PasscodeLockStateType) {
         
         lockState = state
         changeStateCalled = true
