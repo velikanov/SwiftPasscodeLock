@@ -14,8 +14,7 @@ struct EnterPasscodeState: PasscodeLockStateType {
     
     let title: String
     let description: String
-    let isCancellableAction: Bool
-    var isTouchIDAllowed = true
+    var isBiometricAuthAllowed = true
     
     static let incorrectPasscodeAttemptsKey = "incorrectPasscodeAttempts"
     static var incorrectPasscodeAttempts: Int {
@@ -29,9 +28,8 @@ struct EnterPasscodeState: PasscodeLockStateType {
     
     private var isNotificationSent = false
     
-    init(allowCancellation: Bool = false) {
+    init() {
         
-        isCancellableAction = allowCancellation
         title = localizedStringFor("PasscodeLockEnterTitle", comment: "Enter passcode title")
         description = localizedStringFor("PasscodeLockEnterDescription", comment: "Enter passcode description")
     }
