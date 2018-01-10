@@ -12,9 +12,9 @@ public protocol PasscodeLockConfigurationType {
     
     var repository: PasscodeRepositoryType {get}
     var passcodeLength: Int {get}
-    var isTouchIDAllowed: Bool {get set}
-    var shouldRequestTouchIDImmediately: Bool {get}
-    var touchIdReason: String? {get set}
+    var isBiometricAuthAllowed: Bool {get set}
+    var shouldRequestBiometricAuthImmediately: Bool {get}
+    var biometricAuthReason: String? {get set}
     var maximumInccorectPasscodeAttempts: Int {get}
 }
 

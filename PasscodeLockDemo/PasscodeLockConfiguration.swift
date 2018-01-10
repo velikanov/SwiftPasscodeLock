@@ -12,10 +12,10 @@ import PasscodeLock
 struct PasscodeLockConfiguration: PasscodeLockConfigurationType {
     
     let repository: PasscodeRepositoryType
-    var isTouchIDAllowed = true
-    let shouldRequestTouchIDImmediately = true
-    var touchIdReason: String? = nil
-    
+    var isBiometricAuthAllowed: Bool = true
+    let shouldRequestBiometricAuthImmediately: Bool = true
+    var biometricAuthReason: String? = nil
+
     init(repository: PasscodeRepositoryType) {
         
         self.repository = repository

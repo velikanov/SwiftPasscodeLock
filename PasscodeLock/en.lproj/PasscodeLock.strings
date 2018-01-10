@@ -26,8 +26,10 @@
 "PasscodeLockMismatchTitle" = "Try again";
 "PasscodeLockMismatchDescription" = "Passcodes didn\'t match.";
 
-/* Touch ID Reason */
+/* Biometric Auth Reason */
 "PasscodeLockTouchIDReason" = "Authentication required to proceed";
+"PasscodeLockFaceIDReason" = "Authentication required to proceed";
+"PasscodeLockBiometricAuthReason" = "Authentication required to proceed";
 
-/* Touch ID Fallback Button */
-"PasscodeLockTouchIDButton" = "Enter Passcode";
+/* Biometric Auth Fallback Button */
+"PasscodeLockBiometricAuthButton" = "Enter Passcode";
