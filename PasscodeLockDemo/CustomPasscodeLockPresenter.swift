@@ -52,7 +52,7 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
     }
     
     deinit {
-        // remove all notfication observers
+        // remove all notification observers
         notificationCenter.removeObserver(self)
     }
     
@@ -73,19 +73,19 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
         // present PIN lock
         presentPasscodeLock()
         
-        // add splashView for iOS app background swithcer
+        // add splashView for iOS app background switcher
         addSplashView()
     }
     
     @objc dynamic func applicationDidBecomeActive() -> Void {
         
-        // remove splashView for iOS app background swithcer
+        // remove splashView for iOS app background switcher
         removeSplashView()
     }
     
     fileprivate func addSplashView() {
         
-        // add splashView for iOS app background swithcer
+        // add splashView for iOS app background switcher
         if isPasscodePresented {
             passcodeLockVC.view.addSubview(splashView)
         } else {
@@ -97,7 +97,7 @@ class CustomPasscodeLockPresenter: PasscodeLockPresenter {
     
     fileprivate func removeSplashView() {
         
-        // remove splashView for iOS app background swithcer
+        // remove splashView for iOS app background switcher
         splashView.removeFromSuperview()
     }
 }

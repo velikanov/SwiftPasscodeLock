@@ -15,7 +15,7 @@ struct EnterPasscodeState: PasscodeLockStateType {
     let title: String
     let description: String
     let isCancellableAction: Bool
-    var isTouchIDAllowed = true
+    var isBiometricAuthAllowed = true
     
     static let incorrectPasscodeAttemptsKey = "incorrectPasscodeAttempts"
     static var incorrectPasscodeAttempts: Int {

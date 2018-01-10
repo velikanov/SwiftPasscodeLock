@@ -32,14 +32,14 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     @IBOutlet open var placeholders: [PasscodeSignPlaceholderView] = [PasscodeSignPlaceholderView]()
     @IBOutlet open weak var cancelButton: UIButton?
     @IBOutlet open weak var deleteSignButton: UIButton?
-    @IBOutlet open weak var touchIDButton: UIButton?
+    @IBOutlet open weak var biometricAuthButton: UIButton!
     @IBOutlet open weak var placeholdersX: NSLayoutConstraint?
     
     open var successCallback: ((_ lock: PasscodeLockType) -> Void)?
     open var dismissCompletionCallback: (()->Void)?
     open var animateOnDismiss: Bool
     open var notificationCenter: NotificationCenter?
-    
+
     internal let passcodeConfiguration: PasscodeLockConfigurationType
     internal var passcodeLock: PasscodeLockType
     internal var isPlaceholdersAnimationCompleted = true
@@ -48,7 +48,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     // MARK: - Initializers
     
-	public init(state: PasscodeLockStateType, configuration: PasscodeLockConfigurationType, animateOnDismiss: Bool = true, nibName: String = "PasscodeLockView", bundle: Bundle? = nil) {
+    public init(state: PasscodeLockStateType, configuration: PasscodeLockConfigurationType, animateOnDismiss: Bool = true, nibName: String = "PasscodeLockView", bundle: Bundle? = nil) {
         
         self.animateOnDismiss = animateOnDismiss
         
@@ -96,7 +96,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        if shouldTryToAuthenticateWithBiometrics && passcodeConfiguration.shouldRequestTouchIDImmediately {
+        if shouldTryToAuthenticateWithBiometrics && passcodeConfiguration.shouldRequestBiometricAuthImmediately {
         
             authenticateWithBiometrics()
         }
@@ -107,7 +107,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         titleLabel?.text = passcodeLock.state.title
         descriptionLabel?.text = passcodeLock.state.description
         cancelButton?.isHidden = !passcodeLock.state.isCancellableAction
-        touchIDButton?.isHidden = !passcodeLock.isTouchIDAllowed
+        biometricAuthButton?.isHidden = !passcodeLock.isBiometricAuthAllowed
     }
     
     // MARK: - Events
@@ -126,7 +126,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     
     @objc open func appWillEnterForegroundHandler(_ notification: Notification) {
         
-        if passcodeConfiguration.shouldRequestTouchIDImmediately {
+        if passcodeConfiguration.shouldRequestBiometricAuthImmediately {
             authenticateWithBiometrics()
         }
     }
@@ -155,7 +155,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         passcodeLock.removeSign()
     }
     
-    @IBAction func touchIDButtonTap(_ sender: UIButton) {
+    @IBAction func biometricAuthButtonTap(_ sender: UIButton) {
         
         passcodeLock.authenticateWithBiometrics()
     }
@@ -164,7 +164,7 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
         
         guard passcodeConfiguration.repository.hasPasscode else { return }
 
-        if passcodeLock.isTouchIDAllowed {
+        if passcodeLock.isBiometricAuthAllowed {
             
             passcodeLock.authenticateWithBiometrics()
         }

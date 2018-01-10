@@ -13,7 +13,7 @@ public protocol PasscodeLockStateType {
     var title: String {get}
     var description: String {get}
     var isCancellableAction: Bool {get}
-    var isTouchIDAllowed: Bool {get}
+    var isBiometricAuthAllowed: Bool {get}
     
     mutating func acceptPasscode(_ passcode: [String], fromLock lock: PasscodeLockType)
 }
