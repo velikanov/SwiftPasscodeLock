@@ -48,12 +48,12 @@ open class PasscodeLockViewController: UIViewController, PasscodeLockTypeDelegat
     open var overrideTitleText: String? = nil
     open var overrideDescriptionText: String? = nil
 	
-    internal let passcodeConfiguration: PasscodeLockConfigurationType
-    internal var passcodeLock: PasscodeLockType
-    internal var isPlaceholdersAnimationCompleted = true
-    internal var extraCallbacks = false
+    open var passcodeConfiguration: PasscodeLockConfigurationType
+    open var passcodeLock: PasscodeLockType
+    open var isPlaceholdersAnimationCompleted = true
+    open var extraCallbacks = false
     
-    fileprivate var shouldTryToAuthenticateWithBiometrics = true
+    open var shouldTryToAuthenticateWithBiometrics = true
     
     // MARK: - Initializers
     

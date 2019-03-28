@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = 'PasscodeLock'
-s.version = '1.1.0'
+s.version = '1.1.2'
 s.license = { :type => "MIT", :file => 'LICENSE.txt' }
 s.summary = 'An iOS passcode lock with Touch ID authentication written in Swift.'
 s.homepage = 'https://github.com/oskarirauta/SwiftPasscodeLock'
