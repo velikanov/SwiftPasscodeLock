@@ -29,7 +29,7 @@ class PasscodeLockTests: XCTestCase {
             
             var called = false
             
-            override func passcodeLockDidChangeState(lock: PasscodeLockType) {
+            override func passcodeLockDidChangeState(_ lock: PasscodeLockType) {
                 
                 called = true
             }
@@ -51,7 +51,7 @@ class PasscodeLockTests: XCTestCase {
             var called = false
             var signIndex = 0
             
-            override func passcodeLock(lock: PasscodeLockType, addedSignAtIndex index: Int) {
+            override func passcodeLock(_ lock: PasscodeLockType, addedSignAtIndex index: Int) {
                 
                 called = true
                 signIndex = index
@@ -78,7 +78,7 @@ class PasscodeLockTests: XCTestCase {
             var called = false
             var signIndex = 0
             
-            override func passcodeLock(lock: PasscodeLockType, removedSignAtIndex index: Int) {
+            override func passcodeLock(_ lock: PasscodeLockType, removedSignAtIndex index: Int) {
                 
                 called = true
                 signIndex = index

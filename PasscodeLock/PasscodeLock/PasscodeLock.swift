@@ -12,7 +12,7 @@ import LocalAuthentication
 open class PasscodeLock: PasscodeLockType {
     
     open weak var delegate: PasscodeLockTypeDelegate?
-    open let configuration: PasscodeLockConfigurationType
+    open var configuration: PasscodeLockConfigurationType
     
     open var repository: PasscodeRepositoryType {
         return configuration.repository

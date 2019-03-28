@@ -16,7 +16,9 @@ class FakePasscodeLockConfiguration: PasscodeLockConfigurationType {
     let maximumInccorectPasscodeAttempts = 3
     let shouldRequestTouchIDImmediately = false
     var touchIdReason: String? = nil
-    
+    var shouldDisableTouchIDButton: Bool = true
+    var shouldDismissOnTooManyAttempts: Bool = true
+
     init(repository: PasscodeRepositoryType) {
         
         self.repository = repository

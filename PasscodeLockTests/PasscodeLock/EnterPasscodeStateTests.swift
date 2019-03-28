@@ -8,7 +8,7 @@
 
 import XCTest
 
-class NotificaionObserver: NSObject {
+class NotificationObserver: NSObject {
     
     var called = false
     var callCounter = 0
@@ -17,10 +17,10 @@ class NotificaionObserver: NSObject {
         
         let center = NotificationCenter.default
         
-        center.addObserver(self, selector: "handle:", name: NSNotification.Name(rawValue: notification), object: nil)
+        center.addObserver(self, selector: #selector(self.handle), name: NSNotification.Name(rawValue: notification), object: nil)
     }
     
-    func handle(notification: NSNotification) {
+    @objc func handle(notification: NSNotification) {
         
         called = true
         callCounter += 1
@@ -50,7 +50,7 @@ class EnterPasscodeStateTests: XCTestCase {
             
             var called = false
             
-            override func passcodeLockDidSucceed(lock: PasscodeLockType) {
+            override func passcodeLockDidSucceed(_ lock: PasscodeLockType) {
                 
                 called = true
             }
@@ -70,7 +70,7 @@ class EnterPasscodeStateTests: XCTestCase {
             
             var called = false
             
-            override func passcodeLockDidFail(lock: PasscodeLockType) {
+            override func passcodeLockDidFail(_ lock: PasscodeLockType) {
                 
                 called = true
             }
@@ -86,9 +86,9 @@ class EnterPasscodeStateTests: XCTestCase {
     
     func testIncorrectPasscodeNotification() {
         
-        let observer = NotificaionObserver()
+        let observer = NotificationObserver()
         
-        observer.observe(PasscodeLockIncorrectPasscodeNotification)
+        observer.observe(notification: PasscodeLockIncorrectPasscodeNotification)
         
         passcodeState.acceptPasscode(["0"], fromLock: passcodeLock)
         passcodeState.acceptPasscode(["0"], fromLock: passcodeLock)
@@ -99,9 +99,9 @@ class EnterPasscodeStateTests: XCTestCase {
     
     func testIncorrectPasscodeSendNotificationOnce() {
         
-        let observer = NotificaionObserver()
+        let observer = NotificationObserver()
         
-        observer.observe(PasscodeLockIncorrectPasscodeNotification)
+        observer.observe(notification: PasscodeLockIncorrectPasscodeNotification)
         
         passcodeState.acceptPasscode(["0"], fromLock: passcodeLock)
         passcodeState.acceptPasscode(["0"], fromLock: passcodeLock)
