@@ -19,3 +19,15 @@ public protocol PasscodeLockConfigurationType {
     var maximumInccorectPasscodeAttempts: Int {get}
     var shouldDismissOnTooManyAttempts: Bool {get}
 }
+
+public extension PasscodeLockConfigurationType {
+
+    var passcodeLength: Int {
+        return 4
+    }
+    
+    var maximumInccorectPasscodeAttempts: Int {
+        return -1
+    }
+    
+}
